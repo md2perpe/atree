@@ -89,7 +89,7 @@ function run() {
       yLocalScale = config.yLocalScale || 1;
 
     if (!config.isLeft) {
-      background = foreground;
+      background = config.foreground;
       foreground = config.background;
     }
 
