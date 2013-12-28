@@ -99,14 +99,12 @@ function run() {
         z = dz / (dz - sign * zoff * zScale),
 		color = (zoff + sign * Math.PI / 4 < 0) ? foreground : background;
 	  
-	  xScale *= xLocalScale;
       ctx.beginPath();
       ctx.strokeStyle = color;
-      ctx.moveTo(getX(i,        z, sign), getY( i         * yLocalScale, z));
-      ctx.lineTo(getX(i + 0.03, z, sign), getY((i + 0.01) * yLocalScale, z));
+      ctx.moveTo(getX(i       , z * xLocalScale, sign), getY( i         * yLocalScale, z));
+      ctx.lineTo(getX(i + 0.03, z * xLocalScale, sign), getY((i + 0.01) * yLocalScale, z));
       ctx.closePath();
       ctx.stroke();
-	  xScale /= xLocalScale;
     };
   }
 
