@@ -96,19 +96,19 @@ function run() {
     return function(i) {
 	  xScale *= xLocalScale;
 	  
-      var zoff = i * Math.sin(i),
-        z = dz / (dz - sign * zoff * zScale),
-        x = getX(i, z, sign),
-        y = getY(i * yLocalScale, z);
+      var zoff = i * Math.sin(i);
 
       if (zoff + sign * Math.PI / 4 < 0) {
         switchColor(foreground);
       } else {
         switchColor(background);
       }
-      ctx.moveTo(x, y);
+
+      var z = dz / (dz - sign * zoff * zScale);
+
+	  xScale *= xLocalScale;
+      ctx.moveTo(getX(i,        z, sign), getY( i         * yLocalScale, z));
       ctx.lineTo(getX(i + 0.03, z, sign), getY((i + 0.01) * yLocalScale, z));
-	  
 	  xScale /= xLocalScale;
     };
   }
