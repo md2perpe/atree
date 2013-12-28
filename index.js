@@ -11,35 +11,45 @@ var max = 19,
   };
 
 function run() {
-  var ctx = document.getElementById('scene').getContext('2d'),
-    redSpiralShadow = createSpiral({
-      foreground: "#660000",
-      background: "#330000",
-      isLeft: true,
-	  xLocalScale: 0.93,
-      yLocalScale: 1.01
-    }),
-    redSpiral = createSpiral({
-      foreground: "#ff0000",
-      background: "#440000",
-      isLeft: true,
-	  xLocalScale: 1,
-      yLocalScale: 1
-    }),
-    cyanSpiralShadow = createSpiral({
-      foreground: "#003300",
-      background: "#000000",
-      isLeft: false,
-	  xLocalScale: 0.93,
-      yLocalScale: 1.01
-    }),
-    cyanSpiral = createSpiral({
-      foreground: "#00ffcc",
-      background: "#005633",
-      isLeft: false,
-	  xLocalScale: 1,
-      yLocalScale: 1
-    });
+  var 
+	ctx = document.getElementById('scene').getContext('2d'),
+	graphs = [
+		// Red spiral shadow
+		createSpiral({
+		  foreground: "#660000",
+		  background: "#330000",
+		  isLeft: true,
+		  xLocalScale: 0.93,
+		  yLocalScale: 1.01
+		}),
+		
+		// Red spiral
+		createSpiral({
+		  foreground: "#ff0000",
+		  background: "#440000",
+		  isLeft: true,
+		  xLocalScale: 1,
+		  yLocalScale: 1
+		}),
+		
+		// Cyan spiral shadow
+		createSpiral({
+		  foreground: "#003300",
+		  background: "#000000",
+		  isLeft: false,
+		  xLocalScale: 0.93,
+		  yLocalScale: 1.01
+		}),
+		
+		// Cyan spiral
+		createSpiral({
+		  foreground: "#00ffcc",
+		  background: "#005633",
+		  isLeft: false,
+		  xLocalScale: 1,
+		  yLocalScale: 1
+		})
+	];
 
   animationLoop();
 
@@ -59,11 +69,9 @@ function run() {
     ctx.clearRect(0, 0, 480, 640);
     ctx.beginPath();
 
-    forEachStep(redSpiralShadow);
-    forEachStep(cyanSpiralShadow);
-
-    forEachStep(redSpiral);
-    forEachStep(cyanSpiral);
+	for (var i=0; i<graphs.length; i++) {
+		forEachStep(graphs[i]);
+	}
   }
 
   function forEachStep(callback) {
