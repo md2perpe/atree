@@ -94,7 +94,6 @@ function run() {
     }
 
     return function(i) {
-	  xScale *= xLocalScale;
 	  
       var zoff = i * Math.sin(i);
 
