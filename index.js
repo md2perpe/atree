@@ -67,7 +67,6 @@ function run() {
 
   function renderFrame() {
     ctx.clearRect(0, 0, 480, 640);
-    ctx.beginPath();
 
 	for (var i=0; i<graphs.length; i++) {
 		forEachStep(graphs[i]);
@@ -95,29 +94,20 @@ function run() {
 
     return function(i) {
 	  
-      var zoff = i * Math.sin(i);
-
-      if (zoff + sign * Math.PI / 4 < 0) {
-        switchColor(foreground);
-      } else {
-        switchColor(background);
-      }
-
-      var z = dz / (dz - sign * zoff * zScale);
-
+      var 
+		zoff = i * Math.sin(i),
+        z = dz / (dz - sign * zoff * zScale),
+		color = (zoff + sign * Math.PI / 4 < 0) ? foreground : background;
+	  
 	  xScale *= xLocalScale;
+      ctx.beginPath();
+      ctx.strokeStyle = color;
       ctx.moveTo(getX(i,        z, sign), getY( i         * yLocalScale, z));
       ctx.lineTo(getX(i + 0.03, z, sign), getY((i + 0.01) * yLocalScale, z));
+      ctx.closePath();
+      ctx.stroke();
 	  xScale /= xLocalScale;
     };
-  }
-
-  function switchColor(color) {
-    ctx.closePath();
-    ctx.stroke();
-
-    ctx.strokeStyle = color;
-    ctx.beginPath();
   }
 
   function getX(i, z, sign) {
