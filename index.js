@@ -16,24 +16,28 @@ function run() {
       foreground: "#660000",
       background: "#330000",
       isLeft: true,
+	  xLocalScale: 0.93,
       yLocalScale: 1.01
     }),
     redSpiral = createSpiral({
       foreground: "#ff0000",
       background: "#440000",
       isLeft: true,
+	  xLocalScale: 1,
       yLocalScale: 1
     }),
     cyanSpiralShadow = createSpiral({
       foreground: "#003300",
       background: "#000000",
       isLeft: false,
+	  xLocalScale: 0.93,
       yLocalScale: 1.01
     }),
     cyanSpiral = createSpiral({
       foreground: "#00ffcc",
       background: "#005633",
       isLeft: false,
+	  xLocalScale: 1,
       yLocalScale: 1
     });
 
@@ -55,10 +59,8 @@ function run() {
     ctx.clearRect(0, 0, 480, 640);
     ctx.beginPath();
 
-    xScale *= 0.93;
     forEachStep(redSpiralShadow);
     forEachStep(cyanSpiralShadow);
-    xScale /= 0.93;
 
     forEachStep(redSpiral);
     forEachStep(cyanSpiral);
@@ -75,6 +77,7 @@ function run() {
     var sign = config.isLeft ? -1 : 1,
       background = config.background,
       foreground = config.foreground,
+	  xLocalScale = config.xLocalScale || 1;
       yLocalScale = config.yLocalScale || 1;
 
     if (!config.isLeft) {
@@ -83,6 +86,8 @@ function run() {
     }
 
     return function(i) {
+	  xScale *= xLocalScale;
+	  
       var zoff = i * Math.sin(i),
         z = dz / (dz - sign * zoff * zScale),
         x = getX(i, z, sign),
@@ -95,6 +100,8 @@ function run() {
       }
       ctx.moveTo(x, y);
       ctx.lineTo(getX(i + 0.03, z, sign), getY((i + 0.01) * yLocalScale, z));
+	  
+	  xScale /= xLocalScale;
     };
   }
 
